@@ -1,0 +1,1 @@
+This is the result: Hello This is 1.txt file , I am Anas Hello This is 2.txt , I am  Anas Khan

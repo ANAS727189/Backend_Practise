@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth</title>
+</head>
+<body>
+    <form action="/login" method="post">
+        <h1>Login Into the App</h1>
+        <input type="email" name="email" placeholder="Email">
+        <input type = "password" name = "password" placeholder = "Enter Your Password">
+        <p class="error"> <%=locals.message %></p>
+        <button type="submit">Log In</button>
+        <p>If Not , <a href="/register">Register Here</a></p>
+    </form>
+</body>
+</html>

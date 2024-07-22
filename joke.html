@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joke App</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .joke { margin-top: 50px; }
+        .setup, .joke-content { font-size: 24px; }
+        .delivery { font-size: 20px; margin-top: 20px; display: none; }
+    </style>
+</head>
+<body>
+    <h1>Joke Of The Day</h1>
+    <div class="joke">
+        <div class="setup"></div>
+        <div class="delivery"></div>
+        <div class="joke-content"></div>
+        <button id="btn-joke">Generate a Joke</button>
+    </div>
+    <script>
+        async function fetchJoke() {
+            try {
+                const response = await fetch('/joke');
+                const data = await response.json();
+                console.log(data);  
+
+                if (data.type === 'twopart') {
+                    document.querySelector('.setup').innerText = data.setup;
+                    document.querySelector('.delivery').style.display = 'none'; // Hide delivery initially
+                    setTimeout(() => {
+                        document.querySelector('.delivery').innerText = data.delivery;
+                        document.querySelector('.delivery').style.display = 'block';
+                    }, 2000);
+                    document.querySelector('.joke-content').style.display = 'none';
+                } else if (data.type === 'single') {
+                    document.querySelector('.joke-content').innerText = data.joke;
+                    document.querySelector('.setup').style.display = 'none';
+                    document.querySelector('.delivery').style.display = 'none';
+                    document.querySelector('.joke-content').style.display = 'block';
+                }
+            } catch (error) {
+                document.querySelector('.setup').innerText = "Failed to fetch jokes.";
+                document.querySelector('.delivery').style.display = 'none';
+                document.querySelector('.joke-content').style.display = 'none';
+            }
+        }
+
+        document.getElementById('btn-joke').addEventListener('click', fetchJoke);
+    </script>
+</body>
+</html>
