@@ -26,6 +26,25 @@ app.get("/sweets/", (req, res) => {
     res.json(newSweets);
 });
 
+
+app.get("/sweets/query/", (req, res) => {
+    const { search, limit } = req.query;
+    if(limit) console.log(limit)
+    if(search) console.log(search)
+    let newSweets = [...sweets];
+    if (search) {
+        newSweets = newSweets.filter((sweet) => {
+            return sweet.name.toLowerCase().startsWith(search.toLowerCase());
+        });
+    }
+    if (limit) {
+        newSweets = newSweets.slice(0, Number(limit));
+    }
+    return res.status(200).json(newSweets);
+});
+
+
+
 app.get("/sweets/:sweetID", (req, res) => {
     const newId = req.params.sweetID;
     const singleSweet = sweets.find((sweet) => sweet.id === newId);
@@ -64,21 +83,6 @@ app.get("/sweets/:sweetID/topping/:toppingID", (req, res) => {
 });
 
 
-app.get("/sweets/query/", (req, res) => {
-    const { search, limit } = req.query;
-    if(limit) console.log(limit)
-    if(search) console.log(search)
-    let newSweets = [...sweets];
-    if (search) {
-        newSweets = newSweets.filter((sweet) => {
-            return sweet.name.toLowerCase().startsWith(search.toLowerCase());
-        });
-    }
-    if (limit) {
-        newSweets = newSweets.slice(0, Number(limit));
-    }
-    return res.status(200).json(newSweets);
-});
 
 app.get("/colors", (req, res) => {
     res.json(colors);
